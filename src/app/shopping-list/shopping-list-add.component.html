@@ -27,8 +27,8 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12" #input>
-					<button class="btn btn-success" type="submit" (click)="onAdd(input.value)" *ngIf="isAdd" [disabled]="!form.valid">Add</button>
-					<button class="btn btn-success" type="submit" *ngIf="!isAdd" (click)="editItem(input.value)">Save</button>
+					<button class="btn btn-success" type="submit" *ngIf="isAdd" [disabled]="!form.valid">Add</button>
+					<button class="btn btn-success" type="submit" *ngIf="!isAdd">Save</button>
 					<button class="btn btn-danger" type="button" *ngIf="!isAdd" (click)="onDelete()">Delete Item</button>
 					<button class="btn btn-primary" type="button" *ngIf="!isAdd" (click)="onClear()">Clear</button>
 				</div>

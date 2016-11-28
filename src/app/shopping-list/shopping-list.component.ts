@@ -14,7 +14,7 @@ export class ShoppingListComponent implements OnInit {
   constructor(private sls: ShoppingListService) { }
 
   ngOnInit() {
-  	this.items = this.sls.getItems()
+  	this.items = this.sls.getItems();
   }
 
   onSelectItem(item: Ingredient){
@@ -22,7 +22,7 @@ export class ShoppingListComponent implements OnInit {
   }
 
   onCleared(){
-  	this.selectedItem = null
+  	this.selectedItem = null;
   }  
 
 }

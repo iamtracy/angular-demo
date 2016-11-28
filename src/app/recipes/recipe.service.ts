@@ -1,4 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
+import { Http, Headers, Response } from '@angular/http';
+
+import 'rxjs/Rx';
 
 import { Recipe } from './recipe';
 import { Ingredient } from '../ingredient';
@@ -7,6 +10,8 @@ import { Ingredient } from '../ingredient';
 //Delete @Injectable
 @Injectable()
 export class RecipeService {
+
+  recipesChanged = new EventEmitter<Recipe[]>();
 
 	private recipes: Recipe[] = [
 		new Recipe('Salad', 'Lettuce', 'http://www.pngmart.com/files/1/Salad-PNG.png', [
@@ -19,7 +24,7 @@ export class RecipeService {
     ])
 	];
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   getRecipes(){
   	return this.recipes;
@@ -43,6 +48,25 @@ export class RecipeService {
 
   removeItem(recipe: Recipe){
     this.recipes.splice(this.recipes.indexOf(recipe), 1)
+  }
+
+  storeData(){
+    const body = JSON.stringify(this.recipes);
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put('https://recipebook-6344a.firebaseio.com/recipes.json', body, {headers: headers});
+  }
+
+  fetchData(){
+    return this.http.get('https://recipebook-6344a.firebaseio.com/recipes.json')
+      .map((response: Response) => response.json())
+      .subscribe(
+        (data: Recipe[]) => {
+          this.recipes = data;
+          this.recipesChanged.emit(this.recipes);
+        }
+      );
   }
 
 }

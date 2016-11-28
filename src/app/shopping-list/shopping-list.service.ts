@@ -11,7 +11,6 @@ export class ShoppingListService {
   }
 
   addItems(items: Ingredient[]){
-  	console.log(items);
   	Array.prototype.push.apply(this.items, items);
   }
 
